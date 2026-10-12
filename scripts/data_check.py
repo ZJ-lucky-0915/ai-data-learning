@@ -169,9 +169,27 @@ def check_suspicious(df: pd.DataFrame) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="数据体检")
-    parser.add_argument("path", help="CSV 或 Parquet 文件的路径")
+    parser.add_argument("path", nargs="?", help="CSV 或 Parquet 文件的路径")
     parser.add_argument("--rows", type=int, default=3, help="打印前几行样本")
     args = parser.parse_args()
+
+    if not args.path:
+        print("你没有给数据文件路径。正确用法：")
+        print("    python scripts/data_check.py <数据文件路径>")
+        print()
+        raw = Path("data/raw")
+        if raw.is_dir():
+            files = sorted(p for p in raw.iterdir() if p.suffix in {".csv", ".parquet"})
+            if files:
+                print("data/raw/ 里现成的数据，直接抄一行去用：")
+                for item in files:
+                    print(f"    python scripts/data_check.py {item.as_posix()}")
+            else:
+                print("data/raw/ 里还没有数据文件，先跑 python scripts/download_data.py")
+        else:
+            print("当前目录下找不到 data/raw/ —— 你多半不在项目根目录。先执行：")
+            print('    cd "D:\\Codex Project\\AI-Data"')
+        return
 
     path = Path(args.path)
     if not path.exists():
