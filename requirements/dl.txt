@@ -1,0 +1,12 @@
+# 阶段 4 · 深度学习
+# 说明：Windows 上 PyPI 的 torch 就是 CPU 版，直接装即可。
+# 以后有了 NVIDIA 显卡，改成从官方源装 CUDA 版：
+#   pip install torch --index-url https://download.pytorch.org/whl/cu124
+torch>=2.6
+transformers>=4.48
+datasets>=3.2
+accelerate>=1.2
+evaluate>=0.4
+huggingface_hub>=0.27
+sentencepiece>=0.2
+

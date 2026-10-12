@@ -1,0 +1,14 @@
+# 阶段 5 · LLM 应用
+anthropic>=0.42
+openai>=1.60
+python-dotenv>=1.0
+pypdf>=5.1
+tiktoken>=0.8
+
+# 编排框架
+langchain>=0.3
+langchain-community>=0.3
+langchain-anthropic>=0.3
+langchain-openai>=0.3
+llama-index>=0.12
+

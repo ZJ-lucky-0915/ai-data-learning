@@ -1,0 +1,47 @@
+# 虚拟环境
+.venv/
+venv/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 密钥，绝对不能提交
+.env
+
+# 原始数据与中间产物：用 scripts/download_data.py 重新下
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# 模型文件几十上百 MB，不上 Git
+models/*
+!models/.gitkeep
+
+# 输出产物
+outputs/*
+!outputs/.gitkeep
+
+# Part 2 数据工程产物
+data/staging/*
+!data/staging/.gitkeep
+data/warehouse/*
+!data/warehouse/.gitkeep
+data/mart/*
+!data/mart/.gitkeep
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+
+# IDE
+.idea/
+.vscode/
+
+# 日志
+*.log
+

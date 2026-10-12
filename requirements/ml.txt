@@ -1,0 +1,6 @@
+# 阶段 3 · 传统机器学习
+scikit-learn>=1.6
+xgboost>=2.1
+lightgbm>=4.5
+joblib>=1.4
+
