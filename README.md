@@ -35,7 +35,6 @@ jupyter lab
 AI-Data/
 ├── .venv/                  # 虚拟环境（不提交，重装看 requirements/）
 ├── 数据工程计划.md          # 数据工程支线 + 项目四/五
-├── 作品集与GitHub.md        # 发布流程、README 模板、简历写法
 ├── README.md               # 你在这里
 ├── requirements/
 │   ├── base.txt            # 阶段 1-2：numpy pandas matplotlib jupyter seaborn plotly polars
@@ -97,7 +96,7 @@ AI-Data/
 | 12 | 大数据（选学） | PySpark |
 
 总投入 120–140 小时。按每天 3 小时、每周休一天（≈18 h/周）算，**约 9 周**（做选做项目则 10 周）。
-数据工程细节见 `数据工程计划.md`，发布流程见 `作品集与GitHub.md`。
+数据工程细节见 `数据工程计划.md`。
 每阶段都有"通关标准"，达标了再往下走；卡住就别往下，地基漏了后面全是坑。
 
 ---
