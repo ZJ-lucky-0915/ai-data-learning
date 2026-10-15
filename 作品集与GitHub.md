@@ -268,7 +268,7 @@ D:\Codex Project\
 ├── AI-Data\                       # 仓库 1：ai-data-learning —— 学习记录 + 项目一
 │   ├── notebooks\                 #   课程练习
 │   ├── scripts\  data\  src\
-│   └── 学习计划.md  数据工程计划.md  作品集与GitHub.md
+│   └── 数据工程计划.md  作品集与GitHub.md
 ├── imdb-sentiment-classifier\     # 仓库 2：项目二（独立仓库）
 ├── pdf-summarizer\                # 仓库 3：项目三（独立仓库）
 └── nyc-taxi-warehouse\            # 仓库 4：项目四（独立仓库，主力）
