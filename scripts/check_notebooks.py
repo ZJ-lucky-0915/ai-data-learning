@@ -6,6 +6,26 @@ import json
 import sys
 from pathlib import Path
 
+try:
+    from IPython.core.inputtransformer2 import TransformerManager
+
+    _TRANSFORMER = TransformerManager()
+except Exception:  # noqa: BLE001
+    _TRANSFORMER = None
+
+
+def to_python(source: str) -> str:
+    """把 IPython 魔法命令（%timeit、%%time 等）转换成合法 Python。
+
+    直接用 compile() 检查 notebook 会把魔法命令误报成语法错误。
+    """
+    if _TRANSFORMER is None:
+        return "\n".join(
+            "# magic" if line.lstrip().startswith(("%", "!")) else line
+            for line in source.splitlines()
+        )
+    return _TRANSFORMER.transform_cell(source)
+
 
 def check(path: Path) -> bool:
     try:
@@ -20,7 +40,7 @@ def check(path: Path) -> bool:
             continue
         source = "".join(cell["source"])
         try:
-            compile(source, f"{path.name}:cell{index}", "exec")
+            compile(to_python(source), f"{path.name}:cell{index}", "exec")
         except SyntaxError as exc:
             problems += 1
             print(f"[语法错误] {path.name} 第 {index} 格，第 {exc.lineno} 行: {exc.msg}")
