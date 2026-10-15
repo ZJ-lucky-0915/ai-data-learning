@@ -45,9 +45,4 @@ dbt_project/dbt_packages/
 # 日志
 *.log
 
-# 个人计划文档：含个人信息与能力短板，不适合公开，只在本地保留
-英语提升计划.md
-GSoC备战线.md
-GSoC逐日计划.md
-学习计划.md
 
