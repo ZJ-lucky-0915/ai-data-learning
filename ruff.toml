@@ -1,0 +1,3 @@
+# notebook 里的代码是给人看的，格式化只会制造噪音、还会把输出一起搅乱。
+# 所以让 ruff 跳过 .ipynb，只检查 .py。
+extend-exclude = ["*.ipynb"]

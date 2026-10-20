@@ -93,24 +93,34 @@ def check_numeric(df: pd.DataFrame) -> None:
     print()
     print("  自动标注的可疑信号：")
     flagged = False
-    for column, row in table.iterrows():
+    # 这里的 column 来自 DataFrame 的索引，类型是 Hashable 而不是 str，
+    # 和上面那个循环的 column（str）不是一回事，所以换个名字，别复用。
+    for col_name, row in table.iterrows():
         notes = []
         ratio = row["均值/中位数"]
         if pd.notna(ratio) and ratio > 1.5:
-            notes.append(f"均值是 Median 的 {ratio:.1f} 倍 → 右偏，有高价极端值拉着均值跑")
+            notes.append(
+                f"均值是 Median 的 {ratio:.1f} 倍 → 右偏，有高价极端值拉着均值跑"
+            )
         elif pd.notna(ratio) and ratio < 0.67:
             notes.append(f"均值只有中位数的 {ratio:.2f} 倍 → 左偏")
         if row["最小"] == 0 and row["中位数"] > 0:
-            zeros = int((df[column] == 0).sum())
-            notes.append(f"最小值为 0（{zeros} 个）→ 这类值是真的吗？还是缺失被填成 0？")
-        is_binary = df[column].nunique(dropna=True) <= 2
+            zeros = int((df[col_name] == 0).sum())
+            notes.append(
+                f"最小值为 0（{zeros} 个）→ 这类值是真的吗？还是缺失被填成 0？"
+            )
+        is_binary = df[col_name].nunique(dropna=True) <= 2
         if not is_binary and row["标准差"] > abs(row["均值"]) and row["均值"] != 0:
-            notes.append(f"标准差({row['标准差']:.1f}) 比均值({row['均值']:.1f}) 还大 → 波动极大")
+            notes.append(
+                f"标准差({row['标准差']:.1f}) 比均值({row['均值']:.1f}) 还大 → 波动极大"
+            )
         if row["75%"] > 0 and row["最大"] > row["75%"] * 5:
-            notes.append(f"最大值({row['最大']:.1f}) 是中位数 75% 分位({row['75%']:.1f}) 的 5 倍以上 → 长尾")
+            notes.append(
+                f"最大值({row['最大']:.1f}) 是中位数 75% 分位({row['75%']:.1f}) 的 5 倍以上 → 长尾"
+            )
         if notes:
             flagged = True
-            print(f"    [{column}]")
+            print(f"    [{col_name}]")
             for note in notes:
                 print(f"      - {note}")
     if not flagged:
@@ -134,7 +144,10 @@ def check_suspicious(df: pd.DataFrame) -> None:
     issues = 0
 
     duplicated = int(df.duplicated().sum())
-    print(f"  完全重复的行: {duplicated}" + ("  ← 要查清楚，可能是重复录入" if duplicated else ""))
+    print(
+        f"  完全重复的行: {duplicated}"
+        + ("  ← 要查清楚，可能是重复录入" if duplicated else "")
+    )
     issues += bool(duplicated)
 
     for column in df.columns:
@@ -185,7 +198,9 @@ def main() -> None:
                 for item in files:
                     print(f"    python scripts/data_check.py {item.as_posix()}")
             else:
-                print("data/raw/ 里还没有数据文件，先跑 python scripts/download_data.py")
+                print(
+                    "data/raw/ 里还没有数据文件，先跑 python scripts/download_data.py"
+                )
         else:
             print("当前目录下找不到 data/raw/ —— 你多半不在项目根目录。先执行：")
             print('    cd "D:\\Codex Project\\AI-Data"')
@@ -198,7 +213,7 @@ def main() -> None:
     df = pd.read_parquet(path) if path.suffix == ".parquet" else pd.read_csv(path)
 
     print(f"文件: {path}")
-    print(f"体检开始（这是一份自动化清单，结论要你自己下）")
+    print("体检开始（这是一份自动化清单，结论要你自己下）")
 
     check_shape(df)
     check_missing(df)

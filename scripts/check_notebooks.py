@@ -5,7 +5,14 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from IPython.core.inputtransformer2 import TransformerManager
+
+# IPython 是可选依赖：装了就精确转换魔法命令，没装就退化成简单处理。
+# 这里显式标成「可能是 None」，mypy 才知道下面那句 `is None` 是在做空值检查。
+_TRANSFORMER: TransformerManager | None
 try:
     from IPython.core.inputtransformer2 import TransformerManager
 
@@ -43,12 +50,16 @@ def check(path: Path) -> bool:
             compile(to_python(source), f"{path.name}:cell{index}", "exec")
         except SyntaxError as exc:
             problems += 1
-            print(f"[语法错误] {path.name} 第 {index} 格，第 {exc.lineno} 行: {exc.msg}")
+            print(
+                f"[语法错误] {path.name} 第 {index} 格，第 {exc.lineno} 行: {exc.msg}"
+            )
             line = (exc.text or "").rstrip()
             print(f"          -> {line[:120]}")
 
     status = "通过" if problems == 0 else f"{problems} 个语法问题"
-    print(f"{path.name}: JSON 合法，代码单元 {sum(1 for c in nb['cells'] if c['cell_type'] == 'code')} 个，{status}")
+    print(
+        f"{path.name}: JSON 合法，代码单元 {sum(1 for c in nb['cells'] if c['cell_type'] == 'code')} 个，{status}"
+    )
     return problems == 0
 
 

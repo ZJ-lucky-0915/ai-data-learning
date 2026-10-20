@@ -1,4 +1,5 @@
 """download_data.py 的测试。"""
+
 import pytest
 
 from scripts.download_data import human
@@ -13,7 +14,7 @@ def test_0_字节是_0B():
 
 
 def test_一兆字节是_1MB():
-    assert human(1024 ** 2) == "1MB"
+    assert human(1024**2) == "1MB"
 
 
 def test_传_None_会报_TypeError():
