@@ -61,7 +61,9 @@ def human(size: float) -> str:
 
 def fetch(url: str, dest: Path, timeout: int = 30) -> None:
     """下载 url 到 dest。先写临时文件再改名，避免留下半截文件。"""
-    request = urllib.request.Request(url, headers={"User-Agent": "ai-data-learning/1.0"})
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "ai-data-learning/1.0"}
+    )
     with urllib.request.urlopen(request, timeout=timeout) as response:
         data = response.read()
     if not data:
@@ -81,7 +83,12 @@ def download(name: str) -> bool:
         print(f"  尝试 {url}")
         try:
             fetch(url, dest)
-        except (urllib.error.URLError, urllib.error.HTTPError, OSError, ValueError) as exc:
+        except (
+            urllib.error.URLError,
+            urllib.error.HTTPError,
+            OSError,
+            ValueError,
+        ) as exc:
             print(f"    -> 失败：{type(exc).__name__}: {exc}")
             continue
         print(f"    -> 成功：{dest.name}（{human(dest.stat().st_size)}）")
@@ -127,4 +134,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

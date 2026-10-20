@@ -13,13 +13,13 @@ def test_合法_notebook_返回True(tmp_path):
 
 def test_坏掉的_json_返回False(tmp_path):
     nb = tmp_path / "broken.ipynb"
-    nb.write_text('{ 这不是 json', encoding="utf-8")
+    nb.write_text("{ 这不是 json", encoding="utf-8")
     assert check(nb) is False
 
 
 def test_空文件(tmp_path):
     nb = tmp_path / "empty.ipynb"
-    nb.write_text('', encoding="utf-8")
+    nb.write_text("", encoding="utf-8")
     assert check(nb) is False
 
 
