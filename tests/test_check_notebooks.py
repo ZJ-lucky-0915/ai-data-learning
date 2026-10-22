@@ -2,7 +2,7 @@
 
 import pytest
 
-from scripts.check_notebooks import check
+from scripts.check_notebooks import check, to_python
 
 
 def test_合法_notebook_返回True(tmp_path):
@@ -27,3 +27,9 @@ def test_文件不存在会抛错(tmp_path):
     nb = tmp_path / "不存在.ipynb"
     with pytest.raises(FileNotFoundError):
         check(nb)
+
+
+def test_魔法命令是否会转换成合法python():
+    result = to_python("%timeit 1+1")
+
+    assert result == "get_ipython().run_line_magic('timeit', '1+1')\n"
